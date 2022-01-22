@@ -14,26 +14,19 @@ class Solution {
         ListNode head = new ListNode();
         ListNode tail = head;
 
-        while (list1 != null || list2 != null) {
+        while (list1 != null && list2 != null) {
 
-            if (list1 == null) {
-                tail.next = new ListNode(list2.val);
-                list2 = list2.next;
-            } else if (list2 == null) {
-                tail.next = new ListNode(list1.val);
+            if (list1.val < list2.val) {
+                tail.next = list1;
                 list1 = list1.next;
             } else {
-                if (list1.val < list2.val) {
-                    tail.next = new ListNode(list1.val);
-                    list1 = list1.next;
-                } else {
-                    tail.next = new ListNode(list2.val);
-                    list2 = list2.next;
-                }
+                tail.next = list2;
+                list2 = list2.next;
             }
-
             tail = tail.next;
         }
+
+        tail.next = list1 == null ? list2 : list1;
 
         return head.next;
     }
