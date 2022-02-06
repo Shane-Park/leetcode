@@ -9,14 +9,13 @@ class Solution {
             }
         }
 
-        int cnt2 = 0;
         for (int i = 1; i < boxes.length(); i++) {
 
             if (boxes.charAt(i - 1) == '1') {
-                cnt2++;
+                cnt--;
             }
-            
-            arr[i] = arr[i - 1] - cnt + cnt2;
+
+            arr[i] = arr[i - 1] - cnt;
 
             if (boxes.charAt(i) == '1') {
                 cnt--;
