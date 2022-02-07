@@ -1,16 +1,10 @@
 class Solution {
     public char findTheDifference(String s, String t) {
-        int[] arr = new int['z' - 'a' + 1];
-        arr[t.charAt(0) - 'a']--;
+        long sum = 0;
         for (int i = 0; i < s.length(); i++) {
-            arr[s.charAt(i) - 'a']++;
-            arr[t.charAt(i + 1) - 'a']--;
+            sum = sum + t.charAt(i) - s.charAt(i);
         }
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] < 0) {
-                return (char) ('a' + i);
-            }
-        }
-        return ' ';
+        sum += t.charAt(s.length());
+        return (char) sum;
     }
 }
