@@ -1,48 +1,22 @@
 class Solution {
-public int findPairs(int[] nums, int k) {
-        Queue<Integer> q = new LinkedList<>();
+    public int findPairs(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
-            q.offer(num);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
-
-        Set<Pair> set = new HashSet<>();
-        while (!q.isEmpty()) {
-            Integer poll = q.poll();
-            for (Integer i : q) {
-                if (Math.abs(poll - i) == k) {
-                    set.add(new Pair(poll, i));
+        int cnt = 0;
+        if (k == 0) {
+            for (Integer i : map.keySet()) {
+                if (map.get(i) > 1)
+                    cnt++;
+            }
+        } else {
+            for (Integer i : map.keySet()) {
+                if (map.containsKey(i + k)) {
+                    cnt++;
                 }
             }
         }
-
-        return set.size();
-
-    }
-
-    private class Pair {
-        int num1;
-        int num2;
-
-        public Pair(int num1, int num2) {
-            this.num1 = num1;
-            this.num2 = num2;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            Pair p = (Pair) o;
-            if (p.num1 == num1 && p.num2 == num2) {
-                return true;
-            } else if (p.num1 == num2 && p.num2 == num1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(num1 + num2);
-        }
+        return cnt;
     }
 }
