@@ -1,20 +1,16 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
-        int length = (int) Math.pow(2, nums.length);
-        int binaryLength = (int) (Math.log(length) / Math.log(2));
-        for (int i = 0; i < length; i++) {
-            String binary = String.format("%" + binaryLength + "s", Integer.toBinaryString(i));
-            List<Integer> temp = new ArrayList<>();
-            for (int j = 0; j < binary.length(); j++) {
-                if (binary.charAt(j) == '1') {
-                    temp.add(nums[j]);
-                }
-            }
-            list.add(temp);
-        }
-
+        process(list, new Stack<>(), nums, 0);
         return list;
+    }
 
+    private void process(List<List<Integer>> list, Stack<Integer> temp, int[] nums, int cur) {
+        list.add(new ArrayList<>(temp));
+        for (int i = cur; i < nums.length; i++) {
+            temp.push(nums[i]);
+            process(list, temp, nums, i + 1);
+            temp.pop();
+        }
     }
 }
