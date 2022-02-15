@@ -1,14 +1,9 @@
 class Solution {
     public static int singleNumber(int[] nums) {
-        Set<Integer> set = new HashSet<>();
+        int answer = 0;
         for (int num : nums) {
-            if (!set.add(num)) {
-                set.remove(num);
-            }
+            answer = answer ^ num;
         }
-        for (Integer integer : set) {
-            return integer;
-        }
-        return -1;
+        return answer;
     }
 }
