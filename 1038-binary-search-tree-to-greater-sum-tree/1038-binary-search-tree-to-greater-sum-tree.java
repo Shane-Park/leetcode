@@ -14,36 +14,19 @@
  * }
  */
 class Solution {
-   public TreeNode bstToGst(TreeNode root) {
-        Queue<Integer> q = new PriorityQueue();
-        Map<Integer, Integer> map = new HashMap<>();
-        traverse(root, q);
-        int sum = 0;
-        while (!q.isEmpty()) {
-            Integer poll = q.poll();
-            sum -= poll;
-            map.put(-poll, sum);
-        }
 
-        replaceDfs(root, map);
+ int sum = 0;
+
+    public TreeNode bstToGst(TreeNode root) {
+        if (root == null)
+            return null;
+
+        bstToGst(root.right);
+        root.val += sum;
+        sum = root.val;
+        bstToGst(root.left);
 
         return root;
 
-    }
-
-    private void replaceDfs(TreeNode root, Map<Integer, Integer> map) {
-        if (root == null)
-            return;
-        root.val = map.get(root.val);
-        replaceDfs(root.left, map);
-        replaceDfs(root.right, map);
-    }
-
-    private void traverse(TreeNode root, Queue<Integer> q) {
-        if (root == null)
-            return;
-        q.offer(-root.val);
-        traverse(root.left, q);
-        traverse(root.right, q);
     }
 }
