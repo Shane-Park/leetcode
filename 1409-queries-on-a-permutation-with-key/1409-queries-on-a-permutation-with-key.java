@@ -1,6 +1,6 @@
 class Solution {
     public int[] processQueries(int[] queries, int m) {
-        List<Integer> list = new LinkedList<>();
+        LinkedList<Integer> list = new LinkedList<>();
         for (int i = 0; i < m; i++) {
             list.add(i + 1);
         }
