@@ -1,31 +1,16 @@
 class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> list = new ArrayList<>();
-        Integer start = null;
-        Integer before = null;
-        for (int num : nums) {
-            if (start == null) {
-                start = num;
-                before = num;
-            } else if (num == before + 1) {
-                before = num;
-            } else if (Integer.compare(start, before) == 0) {
-                list.add(String.valueOf(start));
-                start = num;
-                before = num;
-            } else {
-                list.add(start + "->" + before);
-                start = num;
-                before = num;
-            }
-        }
+        int start = 0, end = 0;
 
-        if (start != null) {
-            if (Integer.compare(start, before) == 0) {
-                list.add(String.valueOf(start));
-            } else {
-                list.add(start + "->" + before);
+        for (int i = 0; i < nums.length; i++) {
+            while (i < nums.length - 1 && nums[i] + 1 == nums[i + 1]) {
+                end++;
+                i++;
             }
+            list.add(start == end ? String.valueOf(nums[end]) : nums[start] + "->" + nums[end]);
+            end++;
+            start = end;
         }
 
         return list;
