@@ -1,16 +1,10 @@
 class Solution {
     public int maxWidthOfVerticalArea(int[][] points) {
-        PriorityQueue<Integer> q = new PriorityQueue<>();
-        for (int[] point : points) {
-            q.offer(point[0]);
+        Arrays.sort(points, Comparator.comparingInt(o -> o[0]));
+        int max = 0;
+        for (int i = 0; i < points.length - 2; i++) {
+            max = Math.max(max, points[i + 1][0] - points[i][0]);
         }
-        int maxGap = 0;
-        int before = q.poll();
-        while (!q.isEmpty()) {
-            Integer poll = q.poll();
-            maxGap = Math.max(maxGap, poll - before);
-            before = poll;
-        }
-        return maxGap;
+        return max;
     }
 }
