@@ -14,38 +14,21 @@ class Node {
 */
 
 class Solution {
-  public Node copyRandomList(Node head) {
-        Node dummy = new Node(0);
-        Node headDummy = new Node(0);
-        headDummy.next = head;
-        Node originalCur = headDummy.next;
-        Node copyCur = dummy;
-
-        Map<Node, Integer> randomIndexMap = new HashMap<>();
-        Map<Integer, Node> mapCopy = new HashMap<>();
-        int index = 0;
-
-        while (originalCur != null) {
-            copyCur.next = new Node(originalCur.val);
-
-            randomIndexMap.put(originalCur, index);
-            mapCopy.put(index++, copyCur.next);
-
-            originalCur = originalCur.next;
-            copyCur = copyCur.next;
+    public Node copyRandomList(Node head) {
+        Map<Node, Node> map = new HashMap<>();
+        Node node = head;
+        while (node != null) {
+            map.put(node, new Node(node.val));
+            node = node.next;
         }
 
-        originalCur = headDummy.next;
-        copyCur = dummy.next;
-        while (originalCur != null) {
-            Integer i = randomIndexMap.get(originalCur.random);
-            System.out.println("i = " + i);
-            copyCur.random = mapCopy.get(i);
-            originalCur = originalCur.next;
-            copyCur = copyCur.next;
+        node = head;
+        while (node != null) {
+            map.get(node).next = map.get(node.next);
+            map.get(node).random = map.get(node.random);
+            node = node.next;
         }
-
-        return dummy.next;
+        return map.get(head);
     }
 
 }
