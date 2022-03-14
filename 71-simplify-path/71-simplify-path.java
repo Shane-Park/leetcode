@@ -1,31 +1,20 @@
 class Solution {
- public String simplifyPath(String path) {
-        while (path.contains("//")) {
-            path = path.replaceAll("//", "/");
-        }
-        String[] split = path.split("/");
-        List<String> paths = new ArrayList<>();
-        for (int i = 0; i < split.length; i++) {
-            paths.add(split[i]);
-        }
+    public String simplifyPath(String path) {
+        Stack<String> stack = new Stack<>();
 
-        for (int i = 0; i < paths.size(); i++) {
-            if (paths.get(i).equals(".")) {
-                paths.remove(i--);
-            } else if (paths.get(i).equals("..")) {
-                if (i > 1) {
-                    paths.remove(i-- - 1);
+        for (String dir : path.split("/")) {
+            if (dir.equals("..") && !stack.isEmpty()) {
+                stack.pop();
+            } else {
+                if (!dir.equals(".") && !dir.equals("..") && !dir.equals("")) {
+                    stack.push(dir);
                 }
-                paths.remove(i--);
             }
         }
-        path = "/";
-        for (String p : paths) {
-            path = path + "/" + p;
+        path = "";
+        while (!stack.isEmpty()) {
+            path = "/" + stack.pop() + path;
         }
-        while (path.contains("//")) {
-            path = path.replaceAll("//", "/");
-        }
-        return (path.endsWith("/") && path.length() > 1) ? path.substring(0, path.length() - 1) : path;
+        return path.length() == 0 ? "/" : path;
     }
 }
