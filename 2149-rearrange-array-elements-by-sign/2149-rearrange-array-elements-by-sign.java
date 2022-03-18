@@ -1,18 +1,17 @@
 class Solution {
-    public int[] rearrangeArray(int[] nums) {
-        List<Integer> minus = new ArrayList<>();
-        List<Integer> plus = new ArrayList<>();
+  public int[] rearrangeArray(int[] nums) {
+        int[] answer = new int[nums.length];
+        int plus = 0;
+        int minus = 1;
         for (int num : nums) {
-            if (num < 0) {
-                minus.add(num);
-            } else {
-                plus.add(num);
+            if(num > 0) {
+                answer[plus] = num;
+                plus += 2;
+            }else {
+                answer[minus] = num;
+                minus += 2;
             }
         }
-        for (int i = 0; i < nums.length / 2; i++) {
-            nums[2 * i] = plus.get(i);
-            nums[2 * i + 1] = minus.get(i);
-        }
-        return nums;
+        return answer;
     }
 }
