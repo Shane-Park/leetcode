@@ -2,13 +2,16 @@ class Solution {
     public int countConsistentStrings(String allowed, String[] words) {
         char[] chars = allowed.toCharArray();
         Arrays.sort(chars);
-        return Arrays.stream(words).mapToInt(s -> {
-            char[] array = s.toCharArray();
-            for (char c : array) {
-                if (Arrays.binarySearch(chars, c) < 0)
-                    return 0;
+        int cnt = 0;
+        loop:
+        for (String word : words) {
+            final int LENGTH = word.length();
+            for (int i = 0; i < LENGTH; i++) {
+                if (Arrays.binarySearch(chars, word.charAt(i)) < 0)
+                    continue loop;
             }
-            return 1;
-        }).sum();
+            cnt++;
+        }
+        return cnt;
     }
 }
