@@ -1,22 +1,13 @@
 class Solution {
+
     public int numRescueBoats(int[] people, int limit) {
         Arrays.sort(people);
-        Deque<Integer> dq = new ArrayDeque<>();
-        for (int person : people) {
-            dq.offer(person);
-        }
-
         int cnt = 0;
-        while (!dq.isEmpty()) {
-            int capacity = limit - dq.pollLast();
-            int peopleCount = 1;
-            while (peopleCount < 2 && !dq.isEmpty() && capacity >= dq.peekFirst()) {
-                capacity -= dq.pollFirst();
-                peopleCount++;
+        for (int i = 0, j = people.length - 1; i <= j; j--, cnt++) {
+            if (limit - people[j] >= people[i]) {
+                i++;
             }
-            cnt++;
         }
-
         return cnt;
     }
 }
